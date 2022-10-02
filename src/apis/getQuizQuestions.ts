@@ -57,3 +57,16 @@ export const getSlotMachineQuestions = async (tags: SelectorOption[]) => {
   }));
 };
 
+export const getSuddenDeathQuestions = async () => {
+  const endpoint = `https://the-trivia-api.com/api/questions?limit=50&difficulty=hard`;
+
+  const data = await (await fetch(endpoint)).json();
+  console.log(data);
+  return data.map((question: Question) => ({
+    ...question,
+    answers: shuffleArray([
+      ...question.incorrectAnswers,
+      question.correctAnswer,
+    ]),
+  }));
+};
