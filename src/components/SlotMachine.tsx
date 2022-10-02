@@ -2,7 +2,11 @@ import { useState, useRef } from "react";
 import { tags } from "../data/data.json";
 import { shuffleTags } from "../utils/shuffleTags";
 
-export function SlotMachine() {
+export function SlotMachine({
+  startQuiz,
+}: {
+  startQuiz: (tags: string) => void;
+}) {
   const [isSpin, setIsSpin] = useState(false);
   const [isStartQuiz, setIsStartQuiz] = useState(false);
   const tagInputs = useRef<string[]>([]);
@@ -124,9 +128,10 @@ export function SlotMachine() {
       <div className="flex flex-row">
         {isStartQuiz ? (
           <button
-            className="mx-1 border border-slate-300"
+            className="mx-1  bg-slate-500 text-white"
             onClick={() => {
-              console.log(Array.from(new Set(tagInputs.current)).join(","));
+              let tagInput = Array.from(new Set(tagInputs.current)).join(",");
+              startQuiz(tagInput);
             }}
           >
             Go

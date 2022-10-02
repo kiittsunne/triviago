@@ -41,10 +41,8 @@ export const getNormalQuizQuestions = async (
   }));
 };
 
-export const getSlotMachineQuestions = async (tags: SelectorOption[]) => {
-  const tagQuery = tags.map((tag) => tag.value).join(",");
-
-  const endpoint = `https://the-trivia-api.com/api/questions?limit=12&tags=${tagQuery}`;
+export const getSlotMachineQuestions = async (tags: string) => {
+  const endpoint = `https://the-trivia-api.com/api/questions?limit=12&tags=${tags}`;
 
   const data = await (await fetch(endpoint)).json();
   console.log(data);

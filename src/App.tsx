@@ -56,6 +56,19 @@ function App() {
     setIsLoading(false);
   };
 
+  const startSlotMachineQuiz = async (tags: string) => {
+    setIsLoading(true);
+    setGameOver(false);
+
+    const startSlotMachineQuiz = await getSlotMachineQuestions(tags);
+
+    setQuestions(startSlotMachineQuiz);
+    setScore(0);
+    setUserInput([]);
+    setNumber(0);
+    setIsLoading(false);
+  };
+
   const checkAnswer = (e: MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       // get user answers
@@ -127,7 +140,9 @@ function App() {
               </div>
               {/* selection form container */}
               <div>
-                {quizType === "lucky" && <SlotMachine />}
+                {quizType === "lucky" && (
+                  <SlotMachine startQuiz={startSlotMachineQuiz} />
+                )}
                 {quizType === "normal" && (
                   <NormalQuiz startQuiz={startNormalQuiz} />
                 )}
