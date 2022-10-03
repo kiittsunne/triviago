@@ -31,7 +31,6 @@ export const getNormalQuizQuestions = async (
   const endpoint = `https://the-trivia-api.com/api/questions?${categoryQuery}${difficultyQuery}limit=${limit}`;
 
   const data = await (await fetch(endpoint)).json();
-  console.log(data);
   return data.map((question: Question) => ({
     ...question,
     answers: shuffleArray([
@@ -45,7 +44,6 @@ export const getSlotMachineQuestions = async (tags: string) => {
   const endpoint = `https://the-trivia-api.com/api/questions?limit=12&tags=${tags}`;
 
   const data = await (await fetch(endpoint)).json();
-  console.log(data);
   return data.map((question: Question) => ({
     ...question,
     answers: shuffleArray([
@@ -56,10 +54,9 @@ export const getSlotMachineQuestions = async (tags: string) => {
 };
 
 export const getSuddenDeathQuestions = async () => {
-  const endpoint = `https://the-trivia-api.com/api/questions?limit=50&difficulty=hard`;
+  const endpoint = `https://the-trivia-api.com/api/questions?limit=30&difficulty=hard`;
 
   const data = await (await fetch(endpoint)).json();
-  console.log(data);
   return data.map((question: Question) => ({
     ...question,
     answers: shuffleArray([

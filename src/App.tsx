@@ -69,6 +69,19 @@ function App() {
     setIsLoading(false);
   };
 
+  const startSuddenDeathQuiz = async () => {
+    setIsLoading(true);
+    setGameOver(false);
+
+    const startSuddenDeathQuiz = await getSuddenDeathQuestions();
+
+    setQuestions(startSuddenDeathQuiz);
+    setScore(0);
+    setUserInput([]);
+    setNumber(0);
+    setIsLoading(false);
+  };
+
   const checkAnswer = (e: MouseEvent<HTMLButtonElement>) => {
     if (!gameOver) {
       // get user answers
@@ -101,9 +114,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    console.log(questions);
-  }, [questions]);
 
   return (
     <div>
@@ -146,7 +156,9 @@ function App() {
                 {quizType === "normal" && (
                   <NormalQuiz startQuiz={startNormalQuiz} />
                 )}
-                {quizType === "death" && <SuddenDeath />}
+                {quizType === "death" && (
+                  <SuddenDeath startQuiz={startSuddenDeathQuiz} />
+                )}
               </div>
             </>
           ) : (
@@ -156,8 +168,11 @@ function App() {
                 totalQuestions={questions.length}
                 question={questions[number]?.question}
                 answers={questions[number]?.answers}
-                userInput={userInput ? userInput[number] : undefined}
+                userSubmission={userInput ? userInput[number] : undefined}
                 callback={checkAnswer}
+                score={score}
+                userClicked={userClicked}
+                setUserClicked={setUserClicked}
               />
               {userInput.length === number + 1 &&
                 number !== questions.length - 1 && (
@@ -165,7 +180,7 @@ function App() {
                 )}
             </>
           )}
-        </>
+        </div>
       )}
     </div>
   );
