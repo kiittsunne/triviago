@@ -32,6 +32,7 @@ function App() {
   const [questions, setQuestions] = useState<QuestionState[]>([]);
   const [number, setNumber] = useState(0);
   const [userInput, setUserInput] = useState<AnswerObject[]>([]);
+  const [userClicked, setUserClicked] = useState(false);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
 
@@ -105,6 +106,7 @@ function App() {
   };
 
   const nextQuestion = () => {
+    setUserClicked(false);
     const nextQuestion = number + 1;
 
     if (nextQuestion === questions.length) {
@@ -116,6 +118,7 @@ function App() {
 
   const killQuiz = () => {
     setQuizType("normal");
+    setUserClicked(false);
     setIsLoading(false);
     setGameOver(true);
     setQuestions([]);
