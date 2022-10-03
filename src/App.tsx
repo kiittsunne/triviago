@@ -114,18 +114,29 @@ function App() {
     }
   };
 
+  const killQuiz = () => {
+    setQuizType("normal");
+    setIsLoading(false);
+    setGameOver(true);
+    setQuestions([]);
+    setScore(0);
+    setUserInput([]);
+    setNumber(0);
+  };
 
   return (
-    <div>
-      <h1>Trivia Quiz</h1>
+    <div className="mt-12 h-500">
+      <h1 className="cursor-pointer font-black text-center" onClick={killQuiz}>
+        Trivia Quiz
+      </h1>
       {isLoading ? (
-        <p>is loading...</p>
+        <p className="text-center mt-4">is loading...</p>
       ) : (
-        <>
+        <div className="flex flex-col items-center">
           {gameOver ? (
             <>
               {/* variations of triviago */}
-              <div className="flex flex-row space-x-4">
+              <div className="mt-4 flex flex-row space-x-4">
                 <button
                   id="lucky"
                   className="outline outline-offset-2 outline-1"
@@ -149,7 +160,7 @@ function App() {
                 </button>
               </div>
               {/* selection form container */}
-              <div>
+              <div className="mt-4">
                 {quizType === "lucky" && (
                   <SlotMachine startQuiz={startSlotMachineQuiz} />
                 )}
