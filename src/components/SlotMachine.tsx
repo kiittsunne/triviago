@@ -1,6 +1,4 @@
 import { useState, useRef } from "react";
-import { tags } from "../data/data.json";
-import { shuffleTags } from "../utils/shuffleTags";
 import SlotMachineDoor from "./SlotMachineDoor";
 
 export function SlotMachine({

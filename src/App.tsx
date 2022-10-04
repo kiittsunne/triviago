@@ -182,7 +182,6 @@ function App() {
   function updateProgress() {
     if (!timer) {
       timer = setInterval(() => {
-        console.log("tick");
         setProgress((prev) => (prev += 10));
       }, 1000);
     }
