@@ -6,6 +6,7 @@ import { SlotMachine } from "./components/SlotMachine";
 import { SuddenDeath } from "./components/SuddenDeath";
 import { SelectorOption } from "./components/Selector";
 import QuestionCard from "./components/QuestionCard";
+import { QuizTypeButton } from "./components/QuizTypeButton";
 // api
 import {
   QuestionState,
@@ -13,6 +14,7 @@ import {
   getSlotMachineQuestions,
   getSuddenDeathQuestions,
 } from "./apis/getQuizQuestions";
+import { QuizTypeButtonData } from "./data/data.json";
 
 export type quizTypeProps = {
   setLoading: (val: boolean) => void;
@@ -129,8 +131,13 @@ function App() {
 
   return (
     <div className="mt-12 h-500">
-      <h1 className="cursor-pointer font-black text-center" onClick={killQuiz}>
-        Trivia Quiz
+      <h1
+        className="cursor-pointer font-black text-center text-7xl"
+        onClick={killQuiz}
+      >
+        <span className="text-orange-400">TRI</span>
+        <span className="text-sky-400">VIA</span>
+        <span className="text-lime-400">GO</span>
       </h1>
       {isLoading ? (
         <p className="text-center mt-4">is loading...</p>
@@ -140,27 +147,15 @@ function App() {
             <>
               {/* variations of triviago */}
               <div className="mt-4 flex flex-row space-x-4">
-                <button
-                  id="lucky"
-                  className="outline outline-offset-2 outline-1"
-                  onClick={(e: MouseEvent) => setQuizType(e.currentTarget.id)}
-                >
-                  Feeling Lucky
-                </button>
-                <button
-                  id="normal"
-                  className="outline outline-offset-2 outline-1"
-                  onClick={(e: MouseEvent) => setQuizType(e.currentTarget.id)}
-                >
-                  Normal
-                </button>
-                <button
-                  id="death"
-                  className="outline outline-offset-2 outline-1"
-                  onClick={(e: MouseEvent) => setQuizType(e.currentTarget.id)}
-                >
-                  Sudden Death
-                </button>
+                {QuizTypeButtonData.map((button) => (
+                  <QuizTypeButton
+                    key={button.id}
+                    id={button.id}
+                    text={button.text}
+                    setQuizType={setQuizType}
+                    quizType={quizType}
+                  />
+                ))}
               </div>
               {/* selection form container */}
               <div className="mt-4">

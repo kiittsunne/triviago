@@ -70,5 +70,10 @@
     { "query": "places", "sprite": "🏔" },
     { "query": "business", "sprite": "🛍" },
     { "query": "language", "sprite": "🗣" }
+  ],
+  "QuizTypeButtonData": [
+    { "id": "lucky", "text": "Feeling Lucky" },
+    { "id": "normal", "text": "Normal Quiz" },
+    { "id": "death", "text": "Sudden Death" }
   ]
 }
