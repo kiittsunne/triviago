@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import { tags } from "../data/data.json";
 import { shuffleTags } from "../utils/shuffleTags";
+import SlotMachineDoor from "./SlotMachineDoor";
 
 export function SlotMachine({
   startQuiz,
@@ -14,6 +15,9 @@ export function SlotMachine({
     setIsStartQuiz(true);
     setIsSpin(true);
   }
+  function addTagInputs(tag: string) {
+    tagInputs.current.push(tag);
+  }
   function reset() {
     setIsStartQuiz(false);
     setIsSpin(false);
@@ -21,114 +25,28 @@ export function SlotMachine({
   }
 
   return (
-    <div className="flex flex-col bg-slate-200 h-52 items-center justify-center">
-      <div className="flex flex-row h-28 w-96 justify-around mb-4">
-        <div className="w-24 bg-white overflow-y-hidden">
-          <div
-            className="flex flex-col items-center "
-            id="doorOne"
-            style={
-              !isSpin
-                ? {}
-                : {
-                    transform: `translateY(-${112.05 * tags.length}px)`,
-                    transitionDuration: "1.5s",
-                  }
-            }
-            onTransitionEnd={() => {
-              const nodes = document.getElementById("doorOne")?.children;
-              const last = nodes && nodes[nodes.length - 1]?.id;
-              tagInputs.current.push(`${last}`);
-            }}
-          >
-            <span className="w-24 h-28 text-center align-center pt-9 text-4xl">
-              ❓
-            </span>
-            {shuffleTags(tags).map((tag) => (
-              <span
-                key={tag.query}
-                id={tag.query}
-                className="w-24 h-28 text-center align-center pt-9 text-4xl"
-                style={isSpin ? { filter: `blur(1)` } : { filter: `blur(0)` }}
-              >
-                {tag.sprite}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="w-24 bg-white overflow-y-hidden">
-          <div
-            className="flex flex-col items-center "
-            id="doorTwo"
-            style={
-              !isSpin
-                ? {}
-                : {
-                    transform: `translateY(-${112.05 * tags.length}px)`,
-                    transitionDuration: "1.5s",
-                    transitionDelay: "0.08s",
-                  }
-            }
-            onTransitionEnd={() => {
-              const nodes = document.getElementById("doorTwo")?.children;
-              const last = nodes && nodes[nodes.length - 1]?.id;
-              tagInputs.current.push(`${last}`);
-            }}
-          >
-            <span className="w-24 h-28 text-center align-center pt-9 text-4xl">
-              ❓
-            </span>
-            {shuffleTags(tags).map((tag) => (
-              <span
-                key={tag.query}
-                id={tag.query}
-                className="w-24 h-28 text-center align-center pt-9 text-4xl"
-                style={isSpin ? { filter: `blur(1)` } : { filter: `blur(0)` }}
-              >
-                {tag.sprite}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="w-24 bg-white overflow-y-hidden">
-          <div
-            className="flex flex-col items-center "
-            id="doorThree"
-            style={
-              !isSpin
-                ? {}
-                : {
-                    transform: `translateY(-${112.05 * tags.length}px)`,
-                    transitionDuration: "1.5s",
-                    transitionDelay: "0.16s",
-                  }
-            }
-            onTransitionEnd={() => {
-              const nodes = document.getElementById("doorThree")?.children;
-              const last = nodes && nodes[nodes.length - 1]?.id;
-              tagInputs.current.push(`${last}`);
-            }}
-          >
-            <span className="w-24 h-28 text-center align-center pt-9 text-4xl">
-              ❓
-            </span>
-            {shuffleTags(tags).map((tag) => (
-              <span
-                key={tag.query}
-                id={tag.query}
-                className="w-24 h-28 text-center align-center pt-9 text-4xl"
-                style={isSpin ? { filter: `blur(1)` } : { filter: `blur(0)` }}
-              >
-                {tag.sprite}
-              </span>
-            ))}
-          </div>
-        </div>
+    <div className="flex flex-col h-60 items-center justify-center space-y-12">
+      <div className="flex flex-row h-28 w-96 justify-around">
+        <SlotMachineDoor
+          isSpin={isSpin}
+          addTagInputs={addTagInputs}
+          delay={0}
+        />
+        <SlotMachineDoor
+          isSpin={isSpin}
+          addTagInputs={addTagInputs}
+          delay={0.08}
+        />
+        <SlotMachineDoor
+          isSpin={isSpin}
+          addTagInputs={addTagInputs}
+          delay={0.16}
+        />
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-48 justify-around">
         {isStartQuiz ? (
           <button
-            className="mx-1  bg-slate-500 text-white"
+            className="outline outline-offset-2 outline-slate-400 rounded-md px-4 py-1 hover:bg-slate-400 hover:text-white hover:font-semibold"
             onClick={() => {
               let tagInput = Array.from(new Set(tagInputs.current)).join(",");
               startQuiz(tagInput);
@@ -137,11 +55,17 @@ export function SlotMachine({
             Go
           </button>
         ) : (
-          <button className="mx-1 border border-slate-300" onClick={spin}>
+          <button
+            className="outline outline-offset-2 outline-slate-400 rounded-md px-4 py-1 hover:bg-slate-400 hover:text-white hover:font-semibold"
+            onClick={spin}
+          >
             Play
           </button>
         )}
-        <button className="mx-1 border border-slate-300" onClick={reset}>
+        <button
+          className="outline outline-offset-2 outline-slate-400 rounded-md px-4 py-1 hover:bg-slate-400 hover:text-white hover:font-semibold"
+          onClick={reset}
+        >
           Reset
         </button>
       </div>
