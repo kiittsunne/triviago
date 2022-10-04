@@ -12,6 +12,9 @@ type Props = {
   score: number;
   userClicked: boolean;
   setUserClicked: React.Dispatch<React.SetStateAction<boolean>>;
+  quizType: string;
+  progress: number;
+  maxProgress: number;
 };
 
 const QuestionCard: FC<Props> = (props: Props) => {
@@ -29,7 +32,7 @@ const QuestionCard: FC<Props> = (props: Props) => {
         <h3 className="font-bold my-4">{props.question}</h3>
       </div>
       <div
-        className="flex items-center justify-center box-border space-x-4 w-full h-24"
+        className="flex items-center justify-center box-border space-x-4 w-full h-max min-h-24"
         onClick={() => {
           props.setUserClicked(true);
         }}
@@ -44,7 +47,11 @@ const QuestionCard: FC<Props> = (props: Props) => {
             rounded-md 
             p-1.5 
             
-            ${!props.userClicked && "hover:text-white hover:bg-slate-400"}
+            ${
+              !props.userClicked &&
+              props.progress !== props.maxProgress &&
+              "hover:text-white hover:bg-slate-400"
+            }
 
             ${
               props.userClicked
@@ -53,6 +60,18 @@ const QuestionCard: FC<Props> = (props: Props) => {
                   : props.userSubmission?.userInput === answer
                   ? "cursor bg-red-400 text-white"
                   : "cursor bg-slate-400 disabled:opacity-50"
+                : ""
+            }
+
+            // if sudden death quiz times out and user has not submitted an answer, reveal the correct answer
+
+            ${
+              props.quizType === "death"
+                ? props.progress === props.maxProgress && !props.userClicked
+                  ? props.userSubmission?.correctAnswer === answer
+                    ? "cursor-default bg-lime-400 text-white"
+                    : "cursor-default bg-slate-400 opacity-50"
+                  : ""
                 : ""
             }
 

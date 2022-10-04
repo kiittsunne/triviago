@@ -14,7 +14,9 @@ import {
   getSlotMachineQuestions,
   getSuddenDeathQuestions,
 } from "./apis/getQuizQuestions";
+//data
 import { QuizTypeButtonData } from "./data/data.json";
+import { ProgressBar } from "./components/ProgressBar";
 
 export type quizTypeProps = {
   setLoading: (val: boolean) => void;
@@ -23,8 +25,8 @@ export type quizTypeProps = {
 
 export type AnswerObject = {
   question: string;
-  userInput: string;
-  correct: boolean;
+  userInput: string | null;
+  correct: boolean | null;
   correctAnswer: string;
 };
 
@@ -37,6 +39,12 @@ function App() {
   const [userClicked, setUserClicked] = useState(false);
   const [score, setScore] = useState(0);
   const [gameOver, setGameOver] = useState(true);
+
+  // states for Sudden Death variant
+  const [lives, setLives] = useState<number[]>([]);
+  const [progress, setProgress] = useState(-1);
+  const [suddenDeath, setSuddenDeath] = useState(false);
+  const MAX_PROGRESS = 100;
 
   const startNormalQuiz = async (
     categories: SelectorOption[] | [],
@@ -57,6 +65,7 @@ function App() {
     setUserInput([]);
     setNumber(0);
     setIsLoading(false);
+    setQuizType("normal");
   };
 
   const startSlotMachineQuiz = async (tags: string) => {
@@ -69,6 +78,8 @@ function App() {
     setScore(0);
     setUserInput([]);
     setNumber(0);
+    setQuizType("lucky");
+    setUserClicked(false);
     setIsLoading(false);
   };
 
@@ -83,10 +94,14 @@ function App() {
     setUserInput([]);
     setNumber(0);
     setIsLoading(false);
+    setUserClicked(false);
+    setQuizType("death");
+    setLives([1, 1, 1]);
+    setProgress(0);
   };
 
-  const checkAnswer = (e: MouseEvent<HTMLButtonElement>) => {
-    if (!gameOver) {
+  const checkAnswer = (e?: MouseEvent<HTMLButtonElement>) => {
+    if (e && !gameOver) {
       // get user answers
       const answer = e.currentTarget.value;
 
@@ -103,19 +118,53 @@ function App() {
         correct,
         correctAnswer: questions[number].correctAnswer,
       };
+
       setUserInput((prev) => [...prev, answerObject]);
+
+      // gameover check for sudden death
+
+      if (quizType === "death") {
+        if (!correct) {
+          let newLives = lives;
+          newLives.pop();
+          setLives(newLives);
+
+          !lives.length ? setSuddenDeath(true) : setTimeout(nextQuestion, 1000);
+        } else {
+          setTimeout(nextQuestion, 1000);
+        }
+      }
+    } else if (!e && !gameOver) {
+      // this is for suddendeath variation
+
+      // update answerObject with null userInput
+      const answerObject = {
+        question: questions[number].question,
+        userInput: null,
+        correct: null,
+        correctAnswer: questions[number].correctAnswer,
+      };
+      setUserInput((prev) => [...prev, answerObject]);
+      let newLives = lives;
+      newLives.pop();
+      setLives(newLives);
+      !lives.length ? setSuddenDeath(true) : setTimeout(nextQuestion, 1000);
     }
   };
 
   const nextQuestion = () => {
     setUserClicked(false);
-    const nextQuestion = number + 1;
 
-    if (nextQuestion === questions.length) {
-      setGameOver(true);
-    } else {
+    quizType === "death" && setProgress(0);
+
+    const nextQuestion = number + 1;
+    if (nextQuestion !== questions.length) {
       setNumber(nextQuestion);
     }
+
+    quizType === "death" &&
+      nextQuestion === questions.length &&
+      setSuddenDeath(true);
   };
 
   const killQuiz = () => {
@@ -128,6 +177,28 @@ function App() {
     setUserInput([]);
     setNumber(0);
   };
+
+  let timer: number | undefined;
+  function updateProgress() {
+    if (!timer) {
+      timer = setInterval(() => {
+        console.log("tick");
+        setProgress((prev) => (prev += 10));
+      }, 1000);
+    }
+
+    if (userClicked && progress < MAX_PROGRESS) {
+      timer && clearInterval(timer);
+    }
+    if (!userClicked && progress === MAX_PROGRESS) {
+      checkAnswer();
+      timer && clearInterval(timer);
+    }
+  }
+  useEffect(() => {
+    if (quizType === "death") updateProgress();
+    return () => clearInterval(timer);
+  }, [progress]);
 
   return (
     <div className="mt-12 h-500">
@@ -182,11 +253,46 @@ function App() {
                 score={score}
                 userClicked={userClicked}
                 setUserClicked={setUserClicked}
+                quizType={quizType}
+                progress={progress}
+                maxProgress={MAX_PROGRESS}
               />
-              {userInput.length === number + 1 &&
-                number !== questions.length - 1 && (
-                  <button onClick={nextQuestion}>Next</button>
-                )}
+              {quizType !== "death" ? (
+                userInput.length === number + 1 && (
+                  <>
+                    {number !== questions.length - 1 ? (
+                      <button
+                        onClick={nextQuestion}
+                        className="outline outline-offset-2 outline-slate-400 rounded-md px-4 py-1 hover:bg-slate-400 hover:text-white hover:font-semibold mt-6"
+                      >
+                        Next
+                      </button>
+                    ) : (
+                      <button
+                        onClick={killQuiz}
+                        className="outline outline-offset-2 outline-lime-400 rounded-md px-4 py-1 hover:bg-lime-400 hover:text-white hover:font-semibold mt-6"
+                      >
+                        Again!
+                      </button>
+                    )}
+                  </>
+                )
+              ) : (
+                <>
+                  {!suddenDeath ? (
+                    <ProgressBar lives={lives} progress={progress} />
+                  ) : (
+                    <button
+                      onClick={killQuiz}
+                      className="outline outline-offset-2 outline-lime-400 rounded-md px-4 py-1 hover:bg-lime-400 hover:text-white hover:font-semibold mt-6"
+                    >
+                      {number === questions.length - 1
+                        ? "Woah 😳"
+                        : "Better Luck Next Time 😏"}
+                    </button>
+                  )}
+                </>
+              )}
             </>
           )}
         </div>
