@@ -73,13 +73,14 @@ export function Selector({
               : display.map((option) => (
                   <button
                     key={option.value}
+                    className="border border-slate-200 rounded-md px-1 py-1 m-0.5 hover:bg-slate-400 hover:text-white"
                     onClick={(e: MouseEvent) => {
                       e.stopPropagation();
                       selectOptions(option);
                     }}
                   >
                     {option.name}
-                    <span>&times;</span>
+                    <span className="mx-1 hover:text-white">&times;</span>
                   </button>
                 ))}
           </>
