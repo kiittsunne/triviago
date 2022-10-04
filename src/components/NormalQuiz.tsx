@@ -31,8 +31,7 @@ export function NormalQuiz({
   /* #endregion */
 
   return (
-    <div className="h-180 flex flex-col items-center justify-around m-2">
-      <h1>normal quiz</h1>
+    <div className="h-180 flex flex-col items-center justify-around">
       {/* category multiselect */}
       <Selector
         id={"Categories"}
@@ -70,7 +69,7 @@ export function NormalQuiz({
         <span>{limitInput}</span>
       </div>
       <button
-        className="border border-slate-400 rounded-full px-4 py-1 hover:bg-slate-400 hover:text-white"
+        className="outline outline-offset-2 outline-slate-400 rounded-md px-4 py-1 hover:bg-slate-400 hover:text-white hover:font-semibold"
         onClick={() => {
           startQuiz(categoryInput, difficultyInput, limitInput);
         }}
