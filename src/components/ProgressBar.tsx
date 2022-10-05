@@ -8,8 +8,8 @@ type ProgressBarProps = {
 
 export function ProgressBar({ lives, progress }: ProgressBarProps) {
   return (
-    <div className="flex flex-row mt-4 sm:w-550 w-[320px] bg-black p-1">
-      <div className="flex sm:w-[458px] w-[266px] bg-yellow-200 p-1">
+    <div className="flex flex-row mt-4 sm:w-550 w-[300px] bg-black p-1">
+      <div className="flex sm:w-[458px] w-[240px] bg-yellow-200 p-1">
         <div className="bg-red-300" style={{ width: `${progress}%` }}></div>
       </div>
       <div className="flex flex-row items-center mx-auto justify-around sm:space-x-2">

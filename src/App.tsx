@@ -201,9 +201,9 @@ function App() {
   }, [progress]);
 
   return (
-    <div className="my-40 h-fit p-4 box-border w-screen">
+    <div className="sm:my-24 my-24">
       <h1
-        className="cursor-pointer font-black text-center text-7xl"
+        className="cursor-pointer font-black text-center sm:text-7xl text-6xl"
         onClick={killQuiz}
       >
         <span className="text-orange-400">TRI</span>
@@ -213,11 +213,11 @@ function App() {
       {isLoading ? (
         <p className="text-center mt-4">is loading...</p>
       ) : (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center sm:w-screen">
           {gameOver ? (
             <>
               {/* variations of triviago */}
-              <div className="mt-4 flex flex-row space-x-4">
+              <div className="mt-4 flex flex-row space-x-4 sm:w-fit w-5/6">
                 {QuizTypeButtonData.map((button) => (
                   <QuizTypeButton
                     key={button.id}
@@ -229,7 +229,7 @@ function App() {
                 ))}
               </div>
               {/* selection form container */}
-              <div className="mt-4">
+              <div className="flex items-center justify-center mt-4 sm:w-1/2 p-2 box-border">
                 {quizType === "lucky" && (
                   <SlotMachine startQuiz={startSlotMachineQuiz} />
                 )}

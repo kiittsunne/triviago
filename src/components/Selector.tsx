@@ -60,7 +60,7 @@ export function Selector({
   return (
     <div
       className="
-    w-200 relative min-h-1.5 border border-slate-300 flex items-center gap-2 p-2 rounded outline-white"
+    sm:w-200 w-72 relative min-h-1.5 border border-slate-300 flex items-center gap-2 p-2 rounded outline-white"
       onClick={() => setIsOpen((prev) => !prev)}
       onBlur={() => setIsOpen(false)}
       tabIndex={0}
@@ -107,7 +107,7 @@ export function Selector({
         }}
       ></div>
       <ul
-        className={`absolute m-0 p-0 max-h-60 overflow-y-auto border rounded w-200 bg-white left-0 z-50 ${
+        className={`absolute m-0 p-0 max-h-60 overflow-y-auto border rounded sm:w-200 w-72 bg-white left-0 z-50 ${
           isOpen ? "block" : "hidden"
         }`}
         style={{ top: "calc(100% + 0.25em)" }}

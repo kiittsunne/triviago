@@ -31,7 +31,7 @@ export function NormalQuiz({
   /* #endregion */
 
   return (
-    <div className="h-180 flex flex-col items-center justify-around">
+    <div className="shrink sm:h-180 h-64 flex flex-col items-center justify-around">
       {/* category multiselect */}
       <Selector
         id={"Categories"}
@@ -49,8 +49,8 @@ export function NormalQuiz({
         updateInput={setDifficultyInput}
       />
       {/* number of qns selector */}
-      <div className="w-200 min-h-1.5 flex flex-row justify-between">
-        <label htmlFor="limit" className="ml-2">
+      <div className="sm:w-200 w-[270px] min-h-1.5 flex justify-between">
+        <label htmlFor="limit" className="sm:ml-2">
           Limit
         </label>
         <input
@@ -61,7 +61,7 @@ export function NormalQuiz({
           max={20}
           step={1}
           value={limitInput}
-          className="w-60"
+          className="sm:w-60 w-52"
           onInput={(e: FormEvent<HTMLInputElement>) => {
             setLimitInput(parseInt(e.currentTarget.value));
           }}

@@ -29,7 +29,18 @@ const QuestionCard: FC<Props> = (props: Props) => {
             Score: {props.score} / {props.totalQuestions}
           </p>
         </div>
-        <h3 className="font-bold my-4">{props.question}</h3>
+        <h3
+          className={`
+        sm:font-bold 
+        sm:my-4 
+        
+        mt-2
+        text-${props.question.length > 80 ? "sm" : "md"}
+
+        `}
+        >
+          {props.question}
+        </h3>
       </div>
       <div
         className="
@@ -54,13 +65,16 @@ const QuestionCard: FC<Props> = (props: Props) => {
             border 
             border-slate-300 
             w-1/3
-            m-2.5
+            m-2
             min-h-[6em]
+            text-xs
+            p-1
             sm:m-0
             self-stretch 
             rounded-md 
-            p-1.5 
-            sm:w-1/4 
+            sm:p-1.5 
+            sm:w-1/4
+            sm:text-md 
             
             ${
               !props.userClicked &&

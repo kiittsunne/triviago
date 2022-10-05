@@ -25,8 +25,8 @@ export function SlotMachine({
   }
 
   return (
-    <div className="flex flex-col h-60 items-center justify-center space-y-12">
-      <div className="flex flex-row h-28 w-96 justify-around">
+    <div className="shrink flex flex-col sm:h-60 items-center justify-center sm:space-y-12 space-y-6">
+      <div className="flex flex-row h-28 sm:w-96 space-x-1 justify-around">
         <SlotMachineDoor
           isSpin={isSpin}
           addTagInputs={addTagInputs}
