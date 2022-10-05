@@ -201,7 +201,7 @@ function App() {
   }, [progress]);
 
   return (
-    <div className="mt-12 h-500">
+    <div className="my-40 h-fit p-4 box-border w-screen">
       <h1
         className="cursor-pointer font-black text-center text-7xl"
         onClick={killQuiz}

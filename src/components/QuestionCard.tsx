@@ -19,8 +19,8 @@ type Props = {
 
 const QuestionCard: FC<Props> = (props: Props) => {
   return (
-    <div className="flex flex-col items-center text-center space-y-4 mt-4 w-550">
-      <div className="w-full">
+    <div className="flex flex-col items-center text-center sm:space-y-4 space-y-2 mt-4 sm:w-550 w-92">
+      <div className="sm:w-full w-5/6">
         <div className="flex flex-row justify-between">
           <p>
             Question: {props.questionNum} / {props.totalQuestions}
@@ -32,7 +32,18 @@ const QuestionCard: FC<Props> = (props: Props) => {
         <h3 className="font-bold my-4">{props.question}</h3>
       </div>
       <div
-        className="flex items-center justify-center box-border space-x-4 w-full h-max min-h-24"
+        className="
+        h-max
+        flex 
+        items-center
+        justify-center
+        box-border
+        flex-wrap
+        w-full
+        sm:flex-nowrap
+        sm:space-x-4 
+        sm:min-h-24
+        "
         onClick={() => {
           props.setUserClicked(true);
         }}
@@ -42,10 +53,14 @@ const QuestionCard: FC<Props> = (props: Props) => {
             className={`
             border 
             border-slate-300 
-            w-1/4 
+            w-1/3
+            m-2.5
+            min-h-[6em]
+            sm:m-0
             self-stretch 
             rounded-md 
             p-1.5 
+            sm:w-1/4 
             
             ${
               !props.userClicked &&
