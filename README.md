@@ -8,7 +8,7 @@ In the end, the game has 3 'game modes':
 
  Feeling Lucky              |  Normal Quiz              |  Sudden Death
 :-------------------------:|:-------------------------:|:-------------------------:
-<img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/2022-10-13_18.04.00_n3blah.gif" width=150 alt="lucky">   |  <img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/22-10-13_18.03.55_yf0ttb.gif" width=150 alt="normal"> |  <img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/2022-10-13_18.03.46_jonlba.gif" width=150 alt="death">
+<img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/2022-10-13_18.04.00_n3blah.gif" width=150 alt="lucky">   |  <img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/2022-10-13_18.03.55_yf0ttb.gif" width=150 alt="normal"> |  <img src="https://res.cloudinary.com/kiittsunne/video/upload/e_loop:10,br_3564k,c_scale,f_gif,h_600,q_100/v1665656903/2022-10-13_18.03.46_jonlba.gif" width=150 alt="death">
 Slot machine tiles represent themes and 12 questions from each unique theme will be fetched   |  Choose multiple categories, set difficulty and limit number of questions  | Player gets 30 hard questions, 10s to answer each question and lose lives if wrong/ no answer
 
 ***
